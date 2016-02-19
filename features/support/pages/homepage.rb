@@ -9,5 +9,6 @@ class Homepage < SitePrism::Page
 	element :login,					"#main-header > nav > div > ul > li.login > a > strong"
 	element :signup,				"#main-header > nav > div > ul > li.no-gap > a > strong"
 	element :myaccount,				"#main-header > nav > div.user-menu > button"
+	element :cookie_policy,			"#CookieReportsBanner > div > a.wscrOk"
 
 end

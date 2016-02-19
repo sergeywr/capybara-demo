@@ -2,6 +2,7 @@
 Given(/^I am on worldremit main page$/) do
 	 @home = Homepage.new
 	 @home.load
+	 @home.cookie_policy.click
 end
 
 When(/^I view privacy policy$/) do
