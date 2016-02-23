@@ -6,24 +6,71 @@ require 'site_prism'
 require 'capybara/rspec'
 require 'selenium-webdriver'
 require 'user_data.rb'
+require 'appium_capybara'
+
+#######################################################################
+# ==================== SELENIUM GRID SERVER SETUP ==================== #
 
 SELENIUM_SERVER_IP 		= "127.0.0.1"
 SELENIUM_SERVER_PORT 	= "4444"
 
-Capybara.default_driver = :selenium
+SELENIUM_GRID = "http://#{SELENIUM_SERVER_IP}:#{SELENIUM_SERVER_PORT}/wd/hub"
 
-# ========== TO DO ========== #
-# See how to pass capability from command line - then we can decide on which browser to run tests
-# caps = Selenium::WebDriver::Remote::Capabilities.firefox
-# somethig like: if (passed.Browser == chrome) -> use chrome capability
+# =================================================================== #
+#######################################################################
+# ==================== GRID NODES CAPABILITY SETUP ===================#
 
-  caps = Selenium::WebDriver::Remote::Capabilities.chrome
-  
-# ========== TO DO ========== #
-
-Capybara.register_driver :selenium do |app|
-	Capybara::Selenium::Driver.new(app,
-		:browser => :remote,
-		:url => "http://#{SELENIUM_SERVER_IP}:#{SELENIUM_SERVER_PORT}/wd/hub",
-		:desired_capabilities => caps)
+def setup_desktop_grid(capability)
+	Capybara.register_driver :selenium do |app|
+		Capybara::Selenium::Driver.new(app,
+			:browser => :remote,
+			:url => SELENIUM_GRID,
+			:desired_capabilities => capability)
+	end
+		Capybara.default_driver = :selenium
 end
+
+def setup_mobile_grid(capability)
+	Capybara.register_driver(:appium) do |app|
+	    appium_lib_options = {
+	      :server_url => SELENIUM_GRID
+	    }
+	    all_options = {
+	      :appium_lib => appium_lib_options,
+	      :caps => capability
+	    }
+	    Appium::Capybara::Driver.new app, all_options
+	    Capybara.default_driver = :appium
+	end	
+end
+
+# =================================================================== #
+#######################################################################
+# ========================= ENVIRONMENT SETUP ========================#
+
+if ENV['ENVIRONMENT'] == 'DESKTOP-CHROME'
+  	
+  	caps = Selenium::WebDriver::Remote::Capabilities.chrome
+  	setup_desktop_grid(caps)
+
+elsif ENV['ENVIRONMENT'] == 'DESKTOP-FIREFOX'
+  	
+  	caps = Selenium::WebDriver::Remote::Capabilities.firefox
+  	setup_desktop_grid(caps)
+
+elsif ENV['ENVIRONMENT'] == 'MOBILE-ANDROID-CHROME'
+
+	# TEST CAPABILITIES: TODO: REMOVE IN FUTURE
+	caps_android_chrome = {
+		platform:        "ANDROID",
+		deviceName:      "10.1.5.129:5555",
+		platformName:    "ANDROID",
+		platformVersion: "4.3",
+		app:             "chrome"
+	}
+	setup_mobile_grid(caps_android_chrome)
+end	
+
+# =================================================================== #
+#######################################################################
+
