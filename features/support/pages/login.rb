@@ -15,6 +15,7 @@ class Login < SitePrism::Page
 		self.email.set VALID_DATA.email
 		self.password.set VALID_DATA.password
 		self.login.click
+		sleep($TIME_TO_WAIT_MIN) # workaround for mobile tests (TODO: need to change in future)
 	end
 
 	def submit_invalid_login
@@ -22,6 +23,6 @@ class Login < SitePrism::Page
 		self.email.set INVALID_DATA.email
 		self.password.set INVALID_DATA.password
 		self.login.click
-
+		sleep($TIME_TO_WAIT_MIN) # workaround for mobile tests (TODO: need to change in future)
 	end
 end

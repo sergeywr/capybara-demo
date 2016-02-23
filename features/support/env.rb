@@ -8,6 +8,9 @@ require 'selenium-webdriver'
 require 'user_data.rb'
 require 'appium_capybara'
 
+$TIME_TO_WAIT_MIN = 2
+$TIME_TO_WAIT_MAX = 15
+
 #######################################################################
 # ========================== SETUP BASE URL ==========================#
 

@@ -12,7 +12,5 @@ class Homepage < SitePrism::Page
 	element :cookie_policy,			"#CookieReportsBanner > div > a.wscrOk"
 
 	element :mob_HamburgerMenu,		"#main-header > nav > div > button"
-	element :mob_login,				"#main-header > nav > div > ul > li.login > a"
-	element :mob_myaccount,			"#main-header > nav > div.user-menu"
 
 end
