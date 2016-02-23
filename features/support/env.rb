@@ -40,8 +40,9 @@ def setup_mobile_grid(capability)
 	      :caps => capability
 	    }
 	    Appium::Capybara::Driver.new app, all_options
-	    Capybara.default_driver = :appium
 	end	
+		Capybara.default_driver = :appium
+
 end
 
 # =================================================================== #
@@ -63,7 +64,7 @@ elsif ENV['ENVIRONMENT'] == 'MOBILE-ANDROID-CHROME'
 	# TEST CAPABILITIES: TODO: REMOVE IN FUTURE
 	caps_android_chrome = {
 		platform:        "ANDROID",
-		deviceName:      "10.1.5.129:5555",
+		deviceName:     "10.1.5.129:5555",
 		platformName:    "ANDROID",
 		platformVersion: "4.3",
 		app:             "chrome"
