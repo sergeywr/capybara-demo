@@ -1,8 +1,15 @@
-Given(/^I am on mobile worldremit main page$/) do
-	@homepage = Homepage.new
-	@homepage.load
+
+When(/^I navigate to Login page on mobile$/) do
+	@home.mob_HamburgerMenu.click
+	@home.login.click
 end
 
-When(/^I navigate to mobile Login page$/) do
+When(/^I submit valid user data on mobile$/) do
+	@login = Login.new
+	@login.submit_valid_login
+end
 
+Then(/^I am successfully logged in on mobile$/) do
+	@home = Homepage.new
+	expect(@home).to have_myaccount
 end

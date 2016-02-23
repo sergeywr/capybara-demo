@@ -9,10 +9,22 @@ require 'user_data.rb'
 require 'appium_capybara'
 
 #######################################################################
+# ========================== SETUP BASE URL ==========================#
+
+Capybara.app_host = 'https://www.worldremit.com' #or setup it as argument
+
+#######################################################################
+# ======================= SETUP IMPLICITY WAIT =======================#
+
+SitePrism.configure do |config|
+  config.use_implicit_waits = true
+end
+
+#######################################################################
 # ==================== SELENIUM GRID SERVER SETUP ==================== #
 
 SELENIUM_SERVER_IP 		= "127.0.0.1"
-SELENIUM_SERVER_PORT 	= "4444"
+SELENIUM_SERVER_PORT 	= "4723"
 
 SELENIUM_GRID = "http://#{SELENIUM_SERVER_IP}:#{SELENIUM_SERVER_PORT}/wd/hub"
 
@@ -74,4 +86,11 @@ end
 
 # =================================================================== #
 #######################################################################
+# ========================= SCENARIO TEARDOWN ========================#
 
+After do |scenario|
+	Capybara.current_session.driver.quit
+end
+
+# =================================================================== #
+#######################################################################
